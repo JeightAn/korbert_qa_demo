@@ -3,6 +3,9 @@ import datetime
 import re
 
 from flask import Flask, request, jsonify, render_template, session, url_for, redirect
+#from flask_wtf import FlaskForm
+#from wtforms import TextField, SubmitField
+#from wtforms.validators import NumberRange
 from flask_dropzone import Dropzone
 import time
 from urllib.parse import unquote
@@ -10,7 +13,7 @@ import os
 import uuid
 import secrets
 
-from run_squad import evaluate
+from run_squad import evaluate, load_model
 from squad_generator import convert_text_input_to_squad, \
     convert_file_input_to_squad, convert_context_and_questions_to_squad
 from settings import *
@@ -19,6 +22,7 @@ import pdb
 
 # args, model, tokenizer = None, None, None
 #FLAGS = initialize()
+estimator, tokenizer = load_model()
 
 app = Flask(__name__)
 
@@ -132,7 +136,7 @@ def generate_highlight(context, id, start_index, stop_index):
 def evaluate_input(squad_dict, passthrough=False):
     predict_file = squad_dict
     t = time.time()
-    predictions = evaluate(predict_file)
+    predictions = evaluate(predict_file, estimator, tokenizer)
     dt = time.time() - t
     app.logger.info("Loading time: %0.02f seconds" % (dt))
     if passthrough:

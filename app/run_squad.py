@@ -1165,24 +1165,24 @@ def validate_flags_or_throw(bert_config):
         "(%d) + 3" % (FLAGS.max_seq_length, FLAGS.max_query_length))
 
 
-def evaluate(predict_file):
+def load_model():
   tf.logging.set_verbosity(tf.logging.INFO)
 
   #bert_config = modeling.BertConfig.from_json_file(FLAGS.bert_config_file)
   bert_config = modeling.BertConfig.from_json_file("/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/bert_config.json")
 
-  validate_flags_or_throw(bert_config)
+  #validate_flags_or_throw(bert_config)
 
-  tf.gfile.MakeDirs(FLAGS.output_dir)
+  #tf.gfile.MakeDirs(FLAGS.output_dir)
 
   # KorBERT의 토크나이저 사용
   tokenizer = tokenization.FullTokenizer(
       vocab_file=FLAGS.vocab_file, do_lower_case=FLAGS.do_lower_case)
 
   tpu_cluster_resolver = None
-  if FLAGS.use_tpu and FLAGS.tpu_name:
-    tpu_cluster_resolver = tf.contrib.cluster_resolver.TPUClusterResolver(
-        FLAGS.tpu_name, zone=FLAGS.tpu_zone, project=FLAGS.gcp_project)
+  #if FLAGS.use_tpu and FLAGS.tpu_name:
+  #  tpu_cluster_resolver = tf.contrib.cluster_resolver.TPUClusterResolver(
+  #      FLAGS.tpu_name, zone=FLAGS.tpu_zone, project=FLAGS.gcp_project)
 
   is_per_host = tf.contrib.tpu.InputPipelineConfig.PER_HOST_V2
   run_config = tf.contrib.tpu.RunConfig(
@@ -1228,36 +1228,10 @@ def evaluate(predict_file):
       train_batch_size=FLAGS.train_batch_size,
       predict_batch_size=FLAGS.predict_batch_size)
 
-  #if FLAGS.do_train:
-    # We write to a temporary file to avoid storing very large constant tensors
-    # in memory.
-  #  train_writer = FeatureWriter(
-  #      filename=os.path.join(FLAGS.output_dir, "train.tf_record"),
-  #      is_training=True)
-  #  convert_examples_to_features(
-  #      examples=train_examples,
-  #      tokenizer=tokenizer,
-  #      max_seq_length=FLAGS.max_seq_length,
-  #      doc_stride=FLAGS.doc_stride,
-  #      max_query_length=FLAGS.max_query_length,
-  #      is_training=True,
-  #      output_fn=train_writer.process_feature)
-  #  train_writer.close()
+  return estimator, tokenizer
 
-  #  tf.logging.info("***** Running training *****")
-  #  tf.logging.info("  Num orig examples = %d", len(train_examples))
-  #  tf.logging.info("  Num split examples = %d", train_writer.num_features)
-  #  tf.logging.info("  Batch size = %d", FLAGS.train_batch_size)
-  #  tf.logging.info("  Num steps = %d", num_train_steps)
-  #  del train_examples
-
-  #  train_input_fn = input_fn_builder(
-  #      input_file=train_writer.filename,
-  #      seq_length=FLAGS.max_seq_length,
-  #      is_training=True,
-  #      drop_remainder=True)
-  #  estimator.train(input_fn=train_input_fn, max_steps=num_train_steps)
-
+def evaluate(predict_file, estimator, tokenizer):
+  tf.gfile.MakeDirs(FLAGS.output_dir)
   if FLAGS.do_predict:
     eval_examples = read_squad_examples(
         input_file=predict_file, is_training=False)
@@ -1322,4 +1296,4 @@ def evaluate(predict_file):
 
 
 if __name__ == "__main__":
-    initialize()
+    load_model()
