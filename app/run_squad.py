@@ -32,132 +32,132 @@ import six
 import tensorflow as tf
 import re
 
-def initialize():
-  flags = tf.flags
-  
-  FLAGS = flags.FLAGS
-  
-  ## Required parameters
-  flags.DEFINE_string(
-      "bert_config_file", "pretrained_korbert/bert_config.json",
-      "The config json file corresponding to the pre-trained BERT model. "
-      "This specifies the model architecture.")
-  
-  flags.DEFINE_string("vocab_file", "pretrained_korbert/vocab.korean_morp.list",
-                      "The vocabulary file that the BERT model was trained on.")
-  
-  flags.DEFINE_string(
-      "output_dir", "./output",
-      "The output directory where the model checkpoints will be written.")
-  
-  # Other parameters
-  flags.DEFINE_string("train_file", None,
-                      "SQuAD json for training. E.g., train-v1.1.json")
-  
-  flags.DEFINE_string(
-      "predict_file", None,
-      "SQuAD json for predictions. E.g., dev-v1.1.json or test-v1.1.json")
-  
-  flags.DEFINE_string(
-      "init_checkpoint", "pretrained_korbert/model.ckpt",
-      "Initial checkpoint (usually from a pre-trained BERT model).")
-  
-  flags.DEFINE_bool(
-      "do_lower_case", False,
-      "Whether to lower case the input text. Should be True for uncased "
-      "models and False for cased models.")
-  
-  flags.DEFINE_integer(
-      "max_seq_length", 512,
-      "The maximum total input sequence length after WordPiece tokenization. "
-      "Sequences longer than this will be truncated, and sequences shorter "
-      "than this will be padded.")
-  
-  flags.DEFINE_integer(
-      "doc_stride", 128,
-      "When splitting up a long document into chunks, how much stride to "
-      "take between chunks.")
-  
-  flags.DEFINE_integer(
-      "max_query_length", 64,
-      "The maximum number of tokens for the question. Questions longer than "
-      "this will be truncated to this length.")
-  
-  flags.DEFINE_bool("do_train", False, "Whether to run training.")
-  
-  flags.DEFINE_bool("do_predict", True, "Whether to run eval on the dev set.")
-  
-  flags.DEFINE_integer("train_batch_size", 32, "Total batch size for training.")
-  
-  flags.DEFINE_integer("predict_batch_size", 8,
-                       "Total batch size for predictions.")
-  
-  flags.DEFINE_float("learning_rate", 5e-5, "The initial learning rate for Adam.")
-  
-  flags.DEFINE_float("num_train_epochs", 3.0,
-                     "Total number of training epochs to perform.")
-  
-  flags.DEFINE_float(
-      "warmup_proportion", 0.1,
-      "Proportion of training to perform linear learning rate warmup for. "
-      "E.g., 0.1 = 10% of training.")
-  
-  flags.DEFINE_integer("save_checkpoints_steps", 1000,
-                       "How often to save the model checkpoint.")
-  
-  flags.DEFINE_integer("iterations_per_loop", 1000,
-                       "How many steps to make in each estimator call.")
-  
-  flags.DEFINE_integer(
-      "n_best_size", 20,
-      "The total number of n-best predictions to generate in the "
-      "nbest_predictions.json output file.")
-  
-  flags.DEFINE_integer(
-      "max_answer_length", 30,
-      "The maximum length of an answer that can be generated. This is needed "
-      "because the start and end predictions are not conditioned on one another.")
-  
-  flags.DEFINE_bool("use_tpu", False, "Whether to use TPU or GPU/CPU.")
-  
-  tf.flags.DEFINE_string(
-      "tpu_name", None,
-      "The Cloud TPU to use for training. This should be either the name "
-      "used when creating the Cloud TPU, or a grpc://ip.address.of.tpu:8470 "
-      "url.")
-  
-  tf.flags.DEFINE_string(
-      "tpu_zone", None,
-      "[Optional] GCE zone where the Cloud TPU is located in. If not "
-      "specified, we will attempt to automatically detect the GCE project from "
-      "metadata.")
-  
-  tf.flags.DEFINE_string(
-      "gcp_project", None,
-      "[Optional] Project name for the Cloud TPU-enabled project. If not "
-      "specified, we will attempt to automatically detect the GCE project from "
-      "metadata.")
-  
-  tf.flags.DEFINE_string("master", None, "[Optional] TensorFlow master URL.")
-  
-  flags.DEFINE_integer(
-      "num_tpu_cores", 8,
-      "Only used if `use_tpu` is True. Total number of TPU cores to use.")
-  
-  flags.DEFINE_bool(
-      "verbose_logging", False,
-      "If true, all of the warnings related to data processing will be printed. "
-      "A number of warnings are expected for a normal SQuAD evaluation.")
-  
-  flags.DEFINE_bool(
-      "version_2_with_negative", False,
-      "If true, the SQuAD examples contain some that do not have an answer.")
-  
-  flags.DEFINE_float(
-      "null_score_diff_threshold", 0.0,
-      "If null_score - best_non_null is greater than the threshold predict null.")
+#def initialize():
+flags = tf.flags
 
-  return FLAGS
+FLAGS = flags.FLAGS
+
+## Required parameters
+flags.DEFINE_string(
+  "bert_config_file", "./pretrained_korbert/bert_config.json",
+  "The config json file corresponding to the pre-trained BERT model. "
+  "This specifies the model architecture.")
+
+flags.DEFINE_string("vocab_file", "/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/vocab.korean_morp.list",
+                  "The vocabulary file that the BERT model was trained on.")
+
+flags.DEFINE_string(
+  "output_dir", "/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert",
+  "The output directory where the model checkpoints will be written.")
+
+# Other parameters
+flags.DEFINE_string("train_file", None,
+                  "SQuAD json for training. E.g., train-v1.1.json")
+
+flags.DEFINE_string(
+  "predict_file", None,
+  "SQuAD json for predictions. E.g., dev-v1.1.json or test-v1.1.json")
+
+flags.DEFINE_string(
+  "init_checkpoint", "/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/model.ckpt-18864",
+  "Initial checkpoint (usually from a pre-trained BERT model).")
+
+flags.DEFINE_bool(
+  "do_lower_case", False,
+  "Whether to lower case the input text. Should be True for uncased "
+  "models and False for cased models.")
+
+flags.DEFINE_integer(
+  "max_seq_length", 512,
+  "The maximum total input sequence length after WordPiece tokenization. "
+  "Sequences longer than this will be truncated, and sequences shorter "
+  "than this will be padded.")
+
+flags.DEFINE_integer(
+  "doc_stride", 128,
+  "When splitting up a long document into chunks, how much stride to "
+  "take between chunks.")
+
+flags.DEFINE_integer(
+  "max_query_length", 64,
+  "The maximum number of tokens for the question. Questions longer than "
+  "this will be truncated to this length.")
+
+flags.DEFINE_bool("do_train", False, "Whether to run training.")
+
+flags.DEFINE_bool("do_predict", True, "Whether to run eval on the dev set.")
+
+flags.DEFINE_integer("train_batch_size", 32, "Total batch size for training.")
+
+flags.DEFINE_integer("predict_batch_size", 8,
+                   "Total batch size for predictions.")
+
+flags.DEFINE_float("learning_rate", 5e-5, "The initial learning rate for Adam.")
+
+flags.DEFINE_float("num_train_epochs", 3.0,
+                 "Total number of training epochs to perform.")
+
+flags.DEFINE_float(
+  "warmup_proportion", 0.1,
+  "Proportion of training to perform linear learning rate warmup for. "
+  "E.g., 0.1 = 10% of training.")
+
+flags.DEFINE_integer("save_checkpoints_steps", 1000,
+                   "How often to save the model checkpoint.")
+
+flags.DEFINE_integer("iterations_per_loop", 1000,
+                   "How many steps to make in each estimator call.")
+
+flags.DEFINE_integer(
+  "n_best_size", 20,
+  "The total number of n-best predictions to generate in the "
+  "nbest_predictions.json output file.")
+
+flags.DEFINE_integer(
+  "max_answer_length", 30,
+  "The maximum length of an answer that can be generated. This is needed "
+  "because the start and end predictions are not conditioned on one another.")
+
+flags.DEFINE_bool("use_tpu", False, "Whether to use TPU or GPU/CPU.")
+
+tf.flags.DEFINE_string(
+  "tpu_name", None,
+  "The Cloud TPU to use for training. This should be either the name "
+  "used when creating the Cloud TPU, or a grpc://ip.address.of.tpu:8470 "
+  "url.")
+
+tf.flags.DEFINE_string(
+  "tpu_zone", None,
+  "[Optional] GCE zone where the Cloud TPU is located in. If not "
+  "specified, we will attempt to automatically detect the GCE project from "
+  "metadata.")
+
+tf.flags.DEFINE_string(
+  "gcp_project", None,
+  "[Optional] Project name for the Cloud TPU-enabled project. If not "
+  "specified, we will attempt to automatically detect the GCE project from "
+  "metadata.")
+
+tf.flags.DEFINE_string("master", None, "[Optional] TensorFlow master URL.")
+
+flags.DEFINE_integer(
+  "num_tpu_cores", 8,
+  "Only used if `use_tpu` is True. Total number of TPU cores to use.")
+
+flags.DEFINE_bool(
+  "verbose_logging", False,
+  "If true, all of the warnings related to data processing will be printed. "
+  "A number of warnings are expected for a normal SQuAD evaluation.")
+
+flags.DEFINE_bool(
+  "version_2_with_negative", False,
+  "If true, the SQuAD examples contain some that do not have an answer.")
+
+flags.DEFINE_float(
+  "null_score_diff_threshold", 0.0,
+  "If null_score - best_non_null is greater than the threshold predict null.")
+
+  #return FLAGS
 
 
 class SquadExample(object):
@@ -841,7 +841,7 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
         reverse=True)
 
     _NbestPrediction = collections.namedtuple(  # pylint: disable=invalid-name
-        "NbestPrediction", ["text", "start_logit", "end_logit"])
+        "NbestPrediction", ["text", "start_logit", "end_logit", "start", "end"])
 
     seen_predictions = {}
     nbest = []
@@ -878,7 +878,9 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
           _NbestPrediction(
               text=final_text,
               start_logit=pred.start_logit,
-              end_logit=pred.end_logit))
+              end_logit=pred.end_logit,
+              start=orig_doc_start,
+              end=orig_doc_end))
 
     # if we didn't inlude the empty option in the n-best, inlcude it
     if FLAGS.version_2_with_negative:
@@ -886,12 +888,17 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
         nbest.append(
             _NbestPrediction(
                 text="", start_logit=null_start_logit,
-                end_logit=null_end_logit))
+                end_logit=null_end_logit,
+                start=0,
+                end=0))
+      if len(nbest)==1:
+          nbest.insert(0,
+                  _NbestPrediction(text="empty", start_logit=0.0, end_logit=0.0, start=0, end=0))
     # In very rare edge cases we could have no valid predictions. So we
     # just create a nonce prediction in this case to avoid failure.
     if not nbest:
       nbest.append(
-          _NbestPrediction(text="empty", start_logit=0.0, end_logit=0.0))
+          _NbestPrediction(text="empty", start_logit=0.0, end_logit=0.0, start=0, end=0))
 
     assert len(nbest) >= 1
 
@@ -912,6 +919,8 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
       output["probability"] = probs[i]
       output["start_logit"] = entry.start_logit
       output["end_logit"] = entry.end_logit
+      output["start"] = entry.start
+      output["end"] = entry.end
       nbest_json.append(output)
 
     assert len(nbest_json) >= 1
@@ -927,7 +936,8 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
           new_output = new_output[:-2]
         return new_output
       new_answer = remove_josa(nbest_json[0]["text"])
-      all_predictions[example.qas_id] = new_answer
+      #changed_num = len(nbest_json[0]["text"]) - len(new_answer)
+      all_predictions[example.qas_id] = (new_answer, nbest_json[0]["start"], nbest_json[0]["end"])
     #######################################################
       #all_predictions[example.qas_id] = nbest_json[0]["text"]
     else:
@@ -942,15 +952,16 @@ def write_predictions(all_examples, all_features, all_results, n_best_size,
 
     all_nbest_json[example.qas_id] = nbest_json
 
-  with tf.gfile.GFile(output_prediction_file, "w") as writer:
-    writer.write(json.dumps(all_predictions, indent=4) + "\n")
+  #with tf.gfile.GFile(output_prediction_file, "w") as writer:
+  #  writer.write(json.dumps(all_predictions, indent=4) + "\n")
 
-  with tf.gfile.GFile(output_nbest_file, "w") as writer:
-    writer.write(json.dumps(all_nbest_json, indent=4) + "\n")
+  #with tf.gfile.GFile(output_nbest_file, "w") as writer:
+  #  writer.write(json.dumps(all_nbest_json, indent=4) + "\n")
 
-  if FLAGS.version_2_with_negative:
-    with tf.gfile.GFile(output_null_log_odds_file, "w") as writer:
-      writer.write(json.dumps(scores_diff_json, indent=4) + "\n")
+  #if FLAGS.version_2_with_negative:
+  #  with tf.gfile.GFile(output_null_log_odds_file, "w") as writer:
+  #    writer.write(json.dumps(scores_diff_json, indent=4) + "\n")
+  return all_predictions
 
 
 def get_final_text(pred_text, orig_text, do_lower_case):
@@ -1154,10 +1165,11 @@ def validate_flags_or_throw(bert_config):
         "(%d) + 3" % (FLAGS.max_seq_length, FLAGS.max_query_length))
 
 
-def evaluate(FLAGS):
+def evaluate(predict_file):
   tf.logging.set_verbosity(tf.logging.INFO)
 
-  bert_config = modeling.BertConfig.from_json_file(FLAGS.bert_config_file)
+  #bert_config = modeling.BertConfig.from_json_file(FLAGS.bert_config_file)
+  bert_config = modeling.BertConfig.from_json_file("/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/bert_config.json")
 
   validate_flags_or_throw(bert_config)
 
@@ -1248,7 +1260,7 @@ def evaluate(FLAGS):
 
   if FLAGS.do_predict:
     eval_examples = read_squad_examples(
-        input_file=FLAGS.predict_file, is_training=False)
+        input_file=predict_file, is_training=False)
 
     eval_writer = FeatureWriter(
         filename=os.path.join(FLAGS.output_dir, "eval.tf_record"),
@@ -1303,7 +1315,6 @@ def evaluate(FLAGS):
     output_nbest_file = os.path.join(FLAGS.output_dir, "nbest_predictions.json")
     output_null_log_odds_file = os.path.join(FLAGS.output_dir, "null_odds.json")
 
-    
     return write_predictions(eval_examples, eval_features, all_results,
                       FLAGS.n_best_size, FLAGS.max_answer_length,
                       FLAGS.do_lower_case, output_prediction_file,

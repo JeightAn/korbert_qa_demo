@@ -10,14 +10,15 @@ import os
 import uuid
 import secrets
 
-from run_squad import initialize, evaluate
+from run_squad import evaluate
 from squad_generator import convert_text_input_to_squad, \
     convert_file_input_to_squad, convert_context_and_questions_to_squad
 from settings import *
 import requests
+import pdb
 
 # args, model, tokenizer = None, None, None
-FLAGS = initialize()
+#FLAGS = initialize()
 
 app = Flask(__name__)
 
@@ -109,6 +110,7 @@ def package_squad_prediction(squad_dict, id="context-default"):
         inner_package = []
         for p in entry["paragraphs"]:
             context = p["context"]
+            #pdb.set_trace()
             qas = [(q["question"], prediction[q["id"]][0],
                     datetime.datetime.now().strftime("%d %B %Y %I:%M%p"),
                     "%0.02f seconds" % (dt),
@@ -128,9 +130,9 @@ def generate_highlight(context, id, start_index, stop_index):
     return 'highlight(' + '"#' + id + '",' + str(start_index) + ',' + str(stop_index) + ');return false;'
 
 def evaluate_input(squad_dict, passthrough=False):
-    FLAGS.predict_file = squad_dict
+    predict_file = squad_dict
     t = time.time()
-    predictions = evaluate(FLAGS)
+    predictions = evaluate(predict_file)
     dt = time.time() - t
     app.logger.info("Loading time: %0.02f seconds" % (dt))
     if passthrough:
