@@ -1035,18 +1035,18 @@ def get_final_text(pred_text, orig_text, do_lower_case):
 
   output_text = orig_text[orig_start_position:(orig_end_position + 1)]
   ######## JAEHAK 조사를 강제로 떼주는 방식 ##########
-  def refine_output(orig_answer, pred_answer):
-    while orig_answer in pred_answer:
-      if orig_answer not in pred_answer[:-1]:
-        break
-      pred_answer = pred_answer[:-1]
-    while orig_answer in pred_answer:
-      if orig_answer not in pred_answer[1:]:
-        break
-      pred_answer = pred_answer[1:]
-    return pred_answer
-  if new_text in output_text:
-    output_text = refine_output(new_text, output_text)
+  #def refine_output(orig_answer, pred_answer):
+  #  while orig_answer in pred_answer:
+  #    if orig_answer not in pred_answer[:-1]:
+  #      break
+  #    pred_answer = pred_answer[:-1]
+  #  while orig_answer in pred_answer:
+  #    if orig_answer not in pred_answer[1:]:
+  #      break
+  #    pred_answer = pred_answer[1:]
+  #  return pred_answer
+  #if new_text in output_text:
+  #  output_text = refine_output(new_text, output_text)
   ####################################################
 
   return output_text
