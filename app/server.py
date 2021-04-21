@@ -4,9 +4,6 @@ import re
 
 from flask_ngrok import run_with_ngrok 
 from flask import Flask, request, jsonify, render_template, session, url_for, redirect
-#from flask_wtf import FlaskForm
-#from wtforms import TextField, SubmitField
-#from wtforms.validators import NumberRange
 from flask_dropzone import Dropzone
 import time
 from urllib.parse import unquote
@@ -21,11 +18,12 @@ from settings import *
 import requests
 import pdb
 
-# args, model, tokenizer = None, None, None
-#FLAGS = initialize()
+# infer를 위해 estimator와 tokenizer를 load_model 함수를 이용해 불러옵니다. 
 estimator, tokenizer = load_model()
 
 app = Flask(__name__)
+
+# colab에서의 서빙을 위해 flask_ngrok 모듈의 run_with_ngrok 함수를 사용합니다.
 run_with_ngrok(app)
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -45,8 +43,10 @@ def delay_func(func):
         return returned_value
     return inner
 
+# 실행 시작
 @app.route("/")
 def index():
+    # 처음 보여지는 화면입니다. 
     return render_template("index.html")
 
 @app.route("/", methods=['POST'])
@@ -67,6 +67,7 @@ def process_input():
             file_urls.append(filepath)
         return "upload"
     else:
+        # client로 부터 정보를 받습니다.
         input = request.form["textbox"]
         try:
             return predict_from_text_squad(input)
