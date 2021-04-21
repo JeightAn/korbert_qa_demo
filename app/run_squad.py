@@ -39,15 +39,15 @@ FLAGS = flags.FLAGS
 
 ## Required parameters
 flags.DEFINE_string(
-  "bert_config_file", "./pretrained_korbert/bert_config.json",
+  "bert_config_file", "/pretrained_korbert/bert_config.json",
   "The config json file corresponding to the pre-trained BERT model. "
   "This specifies the model architecture.")
 
-flags.DEFINE_string("vocab_file", "/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/vocab.korean_morp.list",
+flags.DEFINE_string("vocab_file", "/pretrained_korbert/vocab.korean_morp.list",
                   "The vocabulary file that the BERT model was trained on.")
 
 flags.DEFINE_string(
-  "output_dir", "/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert",
+  "output_dir", "/pretrained_korbert",
   "The output directory where the model checkpoints will be written.")
 
 # Other parameters
@@ -59,7 +59,7 @@ flags.DEFINE_string(
   "SQuAD json for predictions. E.g., dev-v1.1.json or test-v1.1.json")
 
 flags.DEFINE_string(
-  "init_checkpoint", "/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/model.ckpt-18864",
+  "init_checkpoint", "/pretrained_korbert/model.ckpt-18864",
   "Initial checkpoint (usually from a pre-trained BERT model).")
 
 flags.DEFINE_bool(
@@ -1168,8 +1168,8 @@ def validate_flags_or_throw(bert_config):
 def load_model():
   tf.logging.set_verbosity(tf.logging.INFO)
 
-  #bert_config = modeling.BertConfig.from_json_file(FLAGS.bert_config_file)
-  bert_config = modeling.BertConfig.from_json_file("/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/bert_config.json")
+  bert_config = modeling.BertConfig.from_json_file(FLAGS.bert_config_file)
+  #bert_config = modeling.BertConfig.from_json_file("/Users/JH/project1/WORK/korbert_qa_demo/app/pretrained_korbert/bert_config.json")
 
   #validate_flags_or_throw(bert_config)
 
