@@ -2,6 +2,7 @@
 import datetime
 import re
 
+from flask_ngrok import run_with_ngrok 
 from flask import Flask, request, jsonify, render_template, session, url_for, redirect
 #from flask_wtf import FlaskForm
 #from wtforms import TextField, SubmitField
@@ -25,6 +26,7 @@ import pdb
 estimator, tokenizer = load_model()
 
 app = Flask(__name__)
+run_with_ngrok(app)
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
@@ -199,4 +201,5 @@ def store_context():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True, port=PORT)
+    #app.run(host="0.0.0.0", debug=True, port=PORT)
+    app.run(debug=True)
