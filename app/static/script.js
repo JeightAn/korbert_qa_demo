@@ -68,6 +68,19 @@ $('a#toggle-history').on('click', function() {
 });
 
 $(function() {
+    $('button#wiki-btn').on('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_wiki_api', {
+        my_input: $('#myInput').val(),
+      }, function(data) {
+        $("#text-data").val(data.context);
+        $('textarea').trigger('input');
+      });
+      return false;
+    });
+});
+
+/*
+$(function() {
     $('button#random-btn').on('click', function() {
       $.getJSON($SCRIPT_ROOT + '/_random_page', {
       }, function(data) {
@@ -77,6 +90,7 @@ $(function() {
       return false;
     });
 });
+*/
 
 function highlight(element, start, end) {
     if (start > -1) {
