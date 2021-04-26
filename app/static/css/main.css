@@ -201,6 +201,11 @@ margin: 0px;
   flex-grow: 1;
 }
 
+.wiki_btn {
+  height: 35px;
+  width: 80px;
+}
+
 #reset-btn {
   margin-bottom: 10px;
 }
