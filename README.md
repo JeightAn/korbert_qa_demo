@@ -1,6 +1,9 @@
 # korbert_qa_demo
 ETRI에서 제공하는 korbert pretrained 모델을 이용해 qa_demo 를 구현합니다.
 
+## 코드 참조
+henryzxu의 bert-qa-demo를 참고하여 작성하였습니다.
+
 ## 사용 방법
 1. git repository를 clone 합니다.  
     - `git clone https://github.com/JeightAn/korbert_qa_demo.git`
@@ -21,7 +24,7 @@ ETRI에서 제공하는 korbert pretrained 모델을 이용해 qa_demo 를 구�
     - app 폴더 안에 pretrained_korbert 디렉토리를 저장해주세요.
 
 7. 플라스크 앱 경로를 설정합니다.
-    - `export FLASK_APP=app/server.py`
+    - `export FLASK_APP=app/server_local.py`
 
 8. 실행합니다.
     - `flask run`
