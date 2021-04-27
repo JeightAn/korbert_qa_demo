@@ -130,3 +130,6 @@ dmypy.json
 
 # pretrained_korbert
 pretrained_korbert/
+
+# pretrained_lstm
+pretrained_lstm/
