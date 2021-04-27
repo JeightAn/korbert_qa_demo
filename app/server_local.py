@@ -12,6 +12,7 @@ import uuid
 import secrets
 
 from run_squad import evaluate, load_model
+from run_sent_classify import load_sent_model, sentiment_predict
 from squad_generator import convert_text_input_to_squad, \
     convert_file_input_to_squad, convert_context_and_questions_to_squad
 from settings import *
@@ -21,6 +22,7 @@ import wikipediaapi
 
 # infer를 위해 estimator와 tokenizer를 load_model 함수를 이용해 불러옵니다. 
 estimator, tokenizer = load_model()
+sent_model, sent_tokenizer = load_sent_model()
 
 app = Flask(__name__)
 
