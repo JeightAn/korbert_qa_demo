@@ -4,9 +4,23 @@ $(function() {
         question_data: $('#question-data').val()
       }, function(data) {
         $("#result").prepend(data.result);
+        $("#evaluate-input").show();
         $("#question-data").val("");
         var hilite = new Function(data.highlight_script);
         hilite()
+      });
+      return false;
+    });
+  });
+
+$(function() {
+    $('button#evaluate').on('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_evaluate_helper', {
+        evaluate_data: $('#evaluate-data').val()
+      }, function(data) {
+        $("#senti-result").prepend(data.result);
+        $("#evaluate-input").show();
+        $("#evaluate-data").val("");
       });
       return false;
     });

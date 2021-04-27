@@ -12,7 +12,7 @@ import uuid
 import secrets
 
 from run_squad import evaluate, load_model
-from run_sent_classify import load_sent_model, sentiment_predict
+from run_sent_classify import sentiment_predict
 from squad_generator import convert_text_input_to_squad, \
     convert_file_input_to_squad, convert_context_and_questions_to_squad
 from settings import *
@@ -22,7 +22,6 @@ import wikipediaapi
 
 # infer를 위해 estimator와 tokenizer를 load_model 함수를 이용해 불러옵니다. 
 estimator, tokenizer = load_model()
-sent_model, sent_tokenizer = load_sent_model()
 
 app = Flask(__name__)
 
@@ -84,7 +83,7 @@ def wiki_api():
     page_py = wiki.page(text)
     if page_py.exists():
         res_title = page_py.title
-        res_sum = page_py.summary
+        res_sum = page_py.summary[:1000]
     else:
         pass
 
@@ -143,13 +142,27 @@ def evaluate_input(squad_dict, passthrough=False):
         return predictions, squad_dict, dt
     return predictions, dt
 
+@app.route('/_evaluate_helper')
+def evaluate_helper():
+    #context = session['context'][-1]
+    #text = context[0]
+    eval_text = request.args.get("evaluate_data", "", type=str).strip()
+    #questions = unquote(request.args.get("question_data", "", type=str)).strip()
+    #app.logger.info("input text: {}\n\nquestions:{}".format(text, questions))
+    prediction = sentiment_predict(eval_text)
+    #predictions, highlight = predict_from_input_squad(text, questions, id)
+    if prediction and eval_text:
+        return jsonify(result=
+                       render_template('live_eval.html',
+                                       predict=[prediction],
+                                       eval_text=[eval_text]))
+    return jsonify(result="")
+
 @app.route('/_input_helper')
 def input_helper():
-    # print(session['context'])
     context = session['context'][-1]
     text = context[0]
     id = context[1]
-    # print(text)
     questions = unquote(request.args.get("question_data", "", type=str)).strip()
     app.logger.info("input text: {}\n\nquestions:{}".format(text, questions))
     predictions, highlight = predict_from_input_squad(text, questions, id)
