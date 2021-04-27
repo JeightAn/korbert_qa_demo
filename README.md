@@ -3,6 +3,7 @@ ETRI에서 제공하는 korbert pretrained 모델을 이용해 qa_demo 를 구�
 
 ## 코드 참조
 henryzxu의 bert-qa-demo를 참고하여 작성하였습니다.
+[링크](https://github.com/henryzxu/bert-qa-demo)
 
 ## 사용 방법
 1. git repository를 clone 합니다.  
