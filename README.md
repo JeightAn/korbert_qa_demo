@@ -26,7 +26,7 @@ henryzxu의 bert-qa-demo를 참고하여 작성하였습니다.
 5. 필요한 모듈을 설치합니다.
     - `pip install -r requirements.txt`
 
-6. drive에 업로드 된 pretrained_model(finetuning)을 다운로드 받습니다.
+6. pretrained_model(finetuning)을 다운로드 받습니다.
     - app 폴더 안에 pretrained_korbert 디렉토리를 저장해주세요.
 
 7. 플라스크 앱 경로를 설정합니다.
