@@ -6,6 +6,10 @@ henryzxu의 bert-qa-demo를 참고하여 작성하였습니다.
 
 [https://github.com/henryzxu/bert-qa-demo](https://github.com/henryzxu/bert-qa-demo)
 
+감정분류 모델은 Won Joon Yoo님의 Introduction to Deep Learning for Natural Language Processing, Wikidocs 를 참고하였습니다.
+
+[https://wikidocs.net/44249](https://wikidocs.net/44249)
+
 ## 사용 방법
 1. git repository를 clone 합니다.  
     - `git clone https://github.com/JeightAn/korbert_qa_demo.git`
