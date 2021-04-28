@@ -144,13 +144,8 @@ def evaluate_input(squad_dict, passthrough=False):
 
 @app.route('/_evaluate_helper')
 def evaluate_helper():
-    #context = session['context'][-1]
-    #text = context[0]
     eval_text = request.args.get("evaluate_data", "", type=str).strip()
-    #questions = unquote(request.args.get("question_data", "", type=str)).strip()
-    #app.logger.info("input text: {}\n\nquestions:{}".format(text, questions))
     prediction = sentiment_predict(eval_text)
-    #predictions, highlight = predict_from_input_squad(text, questions, id)
     if prediction and eval_text:
         return jsonify(result=
                        render_template('live_eval.html',
@@ -212,5 +207,5 @@ def store_context():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True, port=PORT)
-    #app.run()
+    #app.run(host="0.0.0.0", debug=True, port=PORT)
+    app.run()
