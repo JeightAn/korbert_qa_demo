@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
 
-        <div class="intro" style="background-image: url("/Users/JH/project1/WORK/mediazen/joongang/dino_image.png");">
+        <div id="intro-page" class="intro" style="background-image: url("/Users/JH/project1/WORK/mediazen/joongang/dino_image.png");">
             <h1>
                 KorBERT Q&A Demo
             </h1>
@@ -54,7 +54,12 @@
         <div>
             <span id=result></span>
         </div>
-        <div id="evaluate-input" class="question hidden">
+
+        <div id="end-process" class="hidden">
+            <button id="end-btn" class="btn btn-primary">종료하기</button>
+        </div>
+
+        <div id="evaluate-input" class="end hidden">
             <h4>평가</h4>
             <textarea id=evaluate-data placeholder="답변에 대한 평가를 적어주세요."></textarea>
             <button id="evaluate" class="btn btn-primary">평가하기</button>
