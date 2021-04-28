@@ -95,6 +95,10 @@ grid-column: 3;
 padding: 10px;
 }
 
+.sentiment-results {
+padding: 10px;
+}
+
 .history {
   margin-top: 2rem;
   padding: 10px;
