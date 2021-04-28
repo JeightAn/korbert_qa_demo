@@ -60,6 +60,7 @@ $('button#reset-btn').on('click', function() {
     $("#store-context").show();
     $("#reset-context").hide();
     $("#question-input").hide();
+    $("#evaluate-input").hide();
 
     $(".history").show();
 
@@ -72,6 +73,7 @@ $('button#reset-btn').on('click', function() {
     $("#context-title").html("");
     $("#context-data").html("");
     $("#result").html("");
+    $("#senti-result").html("");
     $('textarea').trigger('input');
 });
 
@@ -92,19 +94,6 @@ $(function() {
       return false;
     });
 });
-
-/*
-$(function() {
-    $('button#random-btn').on('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/_random_page', {
-      }, function(data) {
-        $("#text-data").val(data.context);
-        $('textarea').trigger('input');
-      });
-      return false;
-    });
-});
-*/
 
 function highlight(element, start, end) {
     if (start > -1) {
